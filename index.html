@@ -9,25 +9,22 @@
         header { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=500&q=80'); background-size: cover; color: white; padding: 40px 20px; text-align: center; border-radius: 0 0 25px 25px; }
         .container { width: 92%; max-width: 480px; margin: -30px auto 30px; }
         
-        /* 🔍 Search Bar */
         .search-box { width: 100%; padding: 15px 25px; border: none; border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-size: 1rem; margin-bottom: 20px; outline: none; box-sizing: border-box; }
         
-        /* ⭐ Today’s Special */
         .special-banner { background: linear-gradient(45deg, #ff416c, #ff4b2b); color: white; padding: 20px; border-radius: 15px; margin-bottom: 25px; text-align: center; box-shadow: 0 5px 15px rgba(255, 75, 43, 0.4); }
         
-        /* 🌈 Centered Category Headers */
         .category-group { margin-bottom: 20px; }
         .category-header { 
             font-size: 1.4rem; font-weight: bold; margin: 25px 0 15px; text-align: center; 
             color: #ffffff; padding: 10px; border-radius: 50px; box-shadow: 0 3px 6px rgba(0,0,0,0.1);
         }
         
-        /* Menu Item Cards */
         .menu-item { background: white; padding: 16px; margin-bottom: 10px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .item-info { display: flex; align-items: center; gap: 10px; }
+        .item-icon { font-size: 1.2rem; }
         .item-text { font-weight: 600; font-size: 1rem; }
-        .price { color: #27ae60; font-weight: bold; background: #e8f5e9; padding: 5px 12px; border-radius: 20px; }
+        .price { color: #27ae60; font-weight: bold; background: #e8f5e9; padding: 5px 12px; border-radius: 20px; font-size: 0.9rem; white-space: nowrap; }
 
-        /* 📞 Waiter Button */
         .waiter-btn { width: 100%; background: #1c1e21; color: white; border: none; padding: 18px; border-radius: 15px; font-size: 1.1rem; font-weight: bold; margin-top: 20px; cursor: pointer; }
     </style>
 </head>
@@ -48,59 +45,59 @@
 
     <div class="category-group">
         <div class="category-header" style="background: #e67e22;">🍳 Breakfast</div>
-        <div class="menu-item"><span class="item-text">Eggs</span><span class="price">50 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Pancake</span><span class="price">70 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Bread & Jam</span><span class="price">40 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Croissant</span><span class="price">60 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Porridge</span><span class="price">45 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍳</span><span class="item-text">Eggs</span></div><span class="price">50 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥞</span><span class="item-text">Pancake</span></div><span class="price">70 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍞</span><span class="item-text">Bread & Jam</span></div><span class="price">40 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥐</span><span class="item-text">Croissant</span></div><span class="price">60 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥣</span><span class="item-text">Porridge</span></div><span class="price">45 ETB</span></div>
     </div>
 
     <div class="category-group">
         <div class="category-header" style="background: #e74c3c;">🍔 Fast Food</div>
-        <div class="menu-item"><span class="item-text">Burger</span><span class="price">120 ETB</span></div>
-        <div class="menu-item"><span class="item-text">French Fries</span><span class="price">80 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Hot Dog</span><span class="price">90 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Pizza</span><span class="price">150 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Fried Chicken</span><span class="price">130 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍔</span><span class="item-text">Burger</span></div><span class="price">120 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍟</span><span class="item-text">French Fries</span></div><span class="price">80 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🌭</span><span class="item-text">Hot Dog</span></div><span class="price">90 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍕</span><span class="item-text">Pizza</span></div><span class="price">150 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍗</span><span class="item-text">Fried Chicken</span></div><span class="price">130 ETB</span></div>
     </div>
 
     <div class="category-group">
         <div class="category-header" style="background: #3498db;">🥤 Soft Drinks</div>
-        <div class="menu-item"><span class="item-text">Coca-Cola</span><span class="price">30 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Pepsi</span><span class="price">30 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Fanta</span><span class="price">30 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Sprite</span><span class="price">30 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Mineral Water</span><span class="price">20 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥤</span><span class="item-text">Coca-Cola</span></div><span class="price">30 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥤</span><span class="item-text">Pepsi</span></div><span class="price">30 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥤</span><span class="item-text">Fanta</span></div><span class="price">30 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥤</span><span class="item-text">Sprite</span></div><span class="price">30 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>💧</span><span class="item-text">Mineral Water</span></div><span class="price">20 ETB</span></div>
     </div>
 
     <div class="category-group">
         <div class="category-header" style="background: #8e44ad;">🍺 Alcohols</div>
-        <div class="menu-item"><span class="item-text">Beer</span><span class="price">60 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Wine</span><span class="price">120 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Whisky</span><span class="price">150 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Cocktail</span><span class="price">140 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Champagne</span><span class="price">200 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍺</span><span class="item-text">Beer</span></div><span class="price">60 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍷</span><span class="item-text">Wine</span></div><span class="price">120 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥃</span><span class="item-text">Whisky</span></div><span class="price">150 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍸</span><span class="item-text">Cocktail</span></div><span class="price">140 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍾</span><span class="item-text">Champagne</span></div><span class="price">200 ETB</span></div>
     </div>
 
     <div class="category-group">
         <div class="category-header" style="background: #27ae60;">🧃 Juices</div>
-        <div class="menu-item"><span class="item-text">Mango Juice</span><span class="price">60 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Avocado Juice</span><span class="price">80 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Orange Juice</span><span class="price">50 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Papaya Juice</span><span class="price">55 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Mixed Juice</span><span class="price">70 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥭</span><span class="item-text">Mango Juice</span></div><span class="price">60 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥑</span><span class="item-text">Avocado Juice</span></div><span class="price">80 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍊</span><span class="item-text">Orange Juice</span></div><span class="price">50 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥣</span><span class="item-text">Papaya Juice</span></div><span class="price">55 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍹</span><span class="item-text">Mixed Juice</span></div><span class="price">70 ETB</span></div>
     </div>
 
     <div class="category-group">
         <div class="category-header" style="background: #7f8c8d;">☕ Hot Beverages</div>
-        <div class="menu-item"><span class="item-text">Coffee</span><span class="price">30 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Tea</span><span class="price">20 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Milk</span><span class="price">25 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Macchiato</span><span class="price">35 ETB</span></div>
-        <div class="menu-item"><span class="item-text">Hot Chocolate</span><span class="price">40 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>☕</span><span class="item-text">Coffee</span></div><span class="price">30 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍵</span><span class="item-text">Tea</span></div><span class="price">20 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥛</span><span class="item-text">Milk</span></div><span class="price">25 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>☕</span><span class="item-text">Macchiato</span></div><span class="price">35 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍫</span><span class="item-text">Hot Chocolate</span></div><span class="price">40 ETB</span></div>
     </div>
 
-    <button class="waiter-btn" onclick="alert('Waiter notified!')">📞 Call Waiter Button</button>
+    <button class="waiter-btn" onclick="alert('The staff has been notified! Someone will be with you shortly.')">📞 Call Waiter</button>
 </div>
 
 <script>
@@ -109,7 +106,6 @@
         let groups = document.getElementsByClassName('category-group');
         let special = document.getElementById('specialSection');
 
-        // Hide "Today's Special" banner if searching
         special.style.display = input === "" ? "block" : "none";
 
         for (let i = 0; i < groups.length; i++) {
@@ -125,8 +121,6 @@
                     items[j].style.display = "none";
                 }
             }
-
-            // Hide the entire category group (including header) if no items match
             groups[i].style.display = hasMatch ? "block" : "none";
         }
     }
