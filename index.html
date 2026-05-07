@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mekelle Digital Menu - MIT IT Project</title>
+    <title>Mekelle Digital Menu - Live System</title>
     <style>
-        :root { --primary: #1c1e21; --accent: #e74c3c; --success: #27ae60; --bg: #f4f7f6; }
+        :root { --primary: #1c1e21; --accent: #e74c3c; --special: #f39c12; --success: #27ae60; --bg: #f4f7f6; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 100px; }
         header { background: var(--primary); color: white; padding: 30px; text-align: center; border-radius: 0 0 25px 25px; }
         .container { width: 92%; max-width: 500px; margin: -20px auto 20px; }
@@ -15,10 +15,13 @@
         .lang-btn { background: white; border: 1px solid #ddd; padding: 10px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .lang-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        /* Search Box */
+        /* Search & Special Section */
         .search-box { width: 100%; padding: 15px 20px; border: none; border-radius: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); margin-bottom: 25px; box-sizing: border-box; outline: none; }
+        
+        .special-container { background: #fff3e0; border: 2px dashed var(--special); border-radius: 20px; padding: 15px; margin-bottom: 30px; }
+        .special-badge { background: var(--special); color: white; padding: 4px 12px; border-radius: 10px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
 
-        /* Menu Display */
+        /* General Menu UI */
         .category-section { margin-bottom: 35px; }
         .category-title { background: var(--accent); color: white; padding: 8px 25px; border-radius: 50px; font-weight: bold; margin-bottom: 15px; display: inline-block; box-shadow: 0 4px 10px rgba(231,76,60,0.3); }
         .menu-item { background: white; padding: 16px; margin-bottom: 12px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
@@ -26,14 +29,13 @@
         .item-name { font-weight: 600; font-size: 1.1rem; }
         .price-tag { color: var(--success); font-weight: 800; background: #e8f5e9; padding: 6px 14px; border-radius: 20px; font-size: 0.9rem; }
 
-        /* Waiter Button */
-        .waiter-btn { position: fixed; bottom: 20px; left: 20px; right: 20px; background: var(--primary); color: white; border: none; padding: 18px; border-radius: 15px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.3); cursor: pointer; }
+        .waiter-btn { position: fixed; bottom: 20px; left: 20px; right: 20px; background: var(--primary); color: white; border: none; padding: 18px; border-radius: 15px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.3); cursor: pointer; z-index: 100; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>🍽️ Mekelle Digital Cafe</h1>
+    <h1 id="ui-title">🍽️ Mekelle Digital Cafe</h1>
     <p id="ui-subtitle">Responsive QR Menu System</p>
 </header>
 
@@ -45,6 +47,8 @@
     </div>
 
     <input type="text" id="menuSearch" class="search-box" placeholder="🔍 Search..." onkeyup="searchMenu()">
+
+    <div id="special-root"></div>
 
     <div id="menu-root">
         <p style="text-align:center; color: #888;">Fetching menu data...</p>
@@ -71,30 +75,62 @@
 
     let currentLang = 'en';
     let menuItems = null;
+    let specialItems = null;
 
     const localization = {
-        en: { subtitle: "Responsive QR Menu System", search: "🔍 Search menu...", waiter: "📞 Call Waiter", alert: "A waiter is on the way!", currency: " ETB", cats: { "Breakfast": "🍳 Breakfast", "Fast Food": "🍔 Fast Food", "Soft Drinks": "🥤 Soft Drinks", "Alcohols": "🍺 Alcohols", "Juices": "🧃 Juices", "Hot Beverages": "☕ Hot Beverages" } },
-        ti: { subtitle: "ዲጂታል መምረሒ ምግብታት", search: "🔍 ምግቢ ድለዩ...", waiter: "📞 ተቐባሊ ጸውዕ", alert: "ተቐባሊ ሕጂ ክመጽእ እዩ!", currency: " ብር", cats: { "Breakfast": "🍳 ቁርሲ", "Fast Food": "🍔 ቅልጡፍ ምግቢ", "Soft Drinks": "🥤 ልስሉስ መስተ", "Alcohols": "🍺 ኣልኮል", "Juices": "🧃 ጁስ", "Hot Beverages": "☕ ውዑይ መስተ" } },
-        am: { subtitle: "ዲጂታል የምግብ ዝርዝር", search: "🔍 ምግብ ይፈልጉ...", waiter: "📞 አስተናጋጅ ጥራ", alert: "አስተናጋጅ አሁን ይመጣል!", currency: " ብር", cats: { "Breakfast": "🍳 ቁርስ", "Fast Food": "🍔 ፈጣን ምግብ", "Soft Drinks": "🥤 ለስላሳ መጠጦች", "Alcohols": "🍺 አልኮል", "Juices": "🧃 ጁስ", "Hot Beverages": "☕ ትኩስ መጠጦች" } }
+        en: { subtitle: "Responsive QR Menu System", search: "🔍 Search menu...", waiter: "📞 Call Waiter", alert: "A waiter is on the way!", special: "Today's Special Star", currency: " ETB", cats: { "Breakfast": "🍳 Breakfast", "Fast Food": "🍔 Fast Food", "Soft Drinks": "🥤 Soft Drinks", "Alcohols": "🍺 Alcohols", "Juices": "🧃 Juices", "Hot Beverages": "☕ Hot Beverages" } },
+        ti: { subtitle: "ዲጂታል መምረሒ ምግብታት", search: "🔍 ምግቢ ድለዩ...", waiter: "📞 ተቐባሊ ጸውዕ", alert: "ተቐባሊ ሕጂ ክመጽእ እዩ!", special: "ናይ ሎሚ ፍሉይ", currency: " ብር", cats: { "Breakfast": "🍳 ቁርሲ", "Fast Food": "🍔 ቅልጡፍ ምግቢ", "Soft Drinks": "🥤 ልስሉስ መስተ", "Alcohols": "🍺 ኣልኮል", "Juices": "🧃 ጁስ", "Hot Beverages": "☕ ውዑይ መስተ" } },
+        am: { subtitle: "ዲጂታል የምግብ ዝርዝር", search: "🔍 ምግብ ይፈልጉ...", waiter: "📞 አስተናጋጅ ጥራ", alert: "አስተናጋጅ አሁን ይመጣል!", special: "የዛሬ ልዩ ምግብ", currency: " ብር", cats: { "Breakfast": "🍳 ቁርስ", "Fast Food": "🍔 ፈጣን ምግብ", "Soft Drinks": "🥤 ለስላሳ መጠጦች", "Alcohols": "🍺 አልኮል", "Juices": "🧃 ጁስ", "Hot Beverages": "☕ ትኩስ መጠጦች" } }
     };
 
     function setLang(lang, btn) {
         currentLang = lang;
         document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        
-        const ui = localization[lang];
-        document.getElementById('ui-subtitle').innerText = ui.subtitle;
-        document.getElementById('menuSearch').placeholder = ui.search;
-        document.getElementById('ui-waiter').innerText = ui.waiter;
-        
+        updateUIStrings();
+        renderSpecial();
         renderMenu();
     }
 
+    function updateUIStrings() {
+        const ui = localization[currentLang];
+        document.getElementById('ui-subtitle').innerText = ui.subtitle;
+        document.getElementById('menuSearch').placeholder = ui.search;
+        document.getElementById('ui-waiter').innerText = ui.waiter;
+    }
+
+    // Listen to Main Menu
     db.ref('menu_items').on('value', (snapshot) => {
         menuItems = snapshot.val();
         renderMenu();
     });
+
+    // Listen to Specials
+    db.ref('specials').on('value', (snapshot) => {
+        specialItems = snapshot.val();
+        renderSpecial();
+    });
+
+    function renderSpecial() {
+        const root = document.getElementById('special-root');
+        if (!specialItems) { root.innerHTML = ''; return; }
+        
+        let html = `<div class="special-container"><span class="special-badge">${localization[currentLang].special}</span>`;
+        for (let key in specialItems) {
+            const item = specialItems[key];
+            const itemName = item['name_' + currentLang] || item.name_en;
+            html += `
+                <div class="menu-item" style="margin-top:10px; border:1px solid #ffe0b2">
+                    <div class="item-details">
+                        <span class="item-icon">${item.icon || '⭐'}</span>
+                        <span class="item-name">${itemName}</span>
+                    </div>
+                    <span class="price-tag">${item.price}${localization[currentLang].currency}</span>
+                </div>`;
+        }
+        html += `</div>`;
+        root.innerHTML = html;
+    }
 
     function renderMenu() {
         const root = document.getElementById('menu-root');
@@ -110,16 +146,12 @@
         }
 
         const ui = localization[currentLang];
-
         for (let catName in grouped) {
             const section = document.createElement('div');
             section.className = 'category-section';
-            
             let html = `<div class="category-title">${ui.cats[catName] || catName}</div>`;
             grouped[catName].forEach(item => {
-                // THIS LINE PICKS THE RIGHT LANGUAGE FROM FIREBASE
                 const itemName = item['name_' + currentLang] || item.name_en;
-                
                 html += `
                     <div class="menu-item">
                         <div class="item-details">
