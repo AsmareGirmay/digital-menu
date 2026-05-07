@@ -3,107 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mekelle Digital Cafe - QR Menu</title>
+    <title>Mekelle Digital Cafe - Dynamic Menu</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f0f2f5; color: #1c1e21; }
-        header { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=500&q=80'); background-size: cover; color: white; padding: 40px 20px; text-align: center; border-radius: 0 0 25px 25px; }
-        .container { width: 92%; max-width: 480px; margin: -20px auto 30px; }
-        .lang-switcher { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
-        .lang-btn { background: white; border: 1px solid #ddd; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.85rem; transition: 0.3s; }
-        .lang-btn.active { background: #1c1e21; color: white; border-color: #1c1e21; }
-        .search-box { width: 100%; padding: 15px 25px; border: none; border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-size: 1rem; margin-bottom: 20px; outline: none; box-sizing: border-box; }
-        .special-banner { background: linear-gradient(45deg, #ff416c, #ff4b2b); color: white; padding: 20px; border-radius: 15px; margin-bottom: 25px; text-align: center; box-shadow: 0 5px 15px rgba(255, 75, 43, 0.4); }
-        .category-group { margin-bottom: 20px; }
-        .category-header { font-size: 1.4rem; font-weight: bold; margin: 25px 0 15px; text-align: center; color: #ffffff; padding: 10px; border-radius: 50px; box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
-        .menu-item { background: white; padding: 16px; margin-bottom: 10px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .item-info { display: flex; align-items: center; gap: 10px; }
-        .item-text { font-weight: 600; font-size: 1rem; }
-        .price { color: #27ae60; font-weight: bold; background: #e8f5e9; padding: 5px 12px; border-radius: 20px; font-size: 0.9rem; white-space: nowrap; }
-        .waiter-btn { width: 100%; background: #1c1e21; color: white; border: none; padding: 18px; border-radius: 15px; font-size: 1.1rem; font-weight: bold; margin-top: 20px; cursor: pointer; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #f4f7f6; color: #333; }
+        header { background: #1c1e21; color: white; padding: 40px 20px; text-align: center; border-radius: 0 0 25px 25px; }
+        .container { width: 92%; max-width: 500px; margin: 20px auto; }
+        
+        /* Category Styling */
+        .category-section { margin-bottom: 30px; }
+        .category-title { 
+            background: #e74c3c; color: white; padding: 10px 20px; 
+            border-radius: 50px; font-weight: bold; margin-bottom: 15px;
+            display: inline-block; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Menu Item Styling */
+        .menu-item { 
+            background: white; padding: 15px; margin-bottom: 10px; 
+            border-radius: 15px; display: flex; justify-content: space-between; 
+            align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .menu-item:active { transform: scale(0.98); }
+        .item-details { display: flex; align-items: center; gap: 12px; }
+        .item-icon { font-size: 1.5rem; }
+        .item-name { font-weight: 600; font-size: 1.1rem; }
+        .price-tag { 
+            color: #27ae60; font-weight: 800; background: #e8f5e9; 
+            padding: 6px 15px; border-radius: 20px; font-size: 0.95rem; 
+        }
+
+        .loading-spinner { text-align: center; margin-top: 50px; color: #888; font-style: italic; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>🍽️ Mekelle Digital Cafe</h1>
-    <p id="sub-header">Premium Digital Experience</p>
+    <p>Real-Time Menu Management</p>
 </header>
 
-<div class="container">
-    <div class="lang-switcher">
-        <button class="lang-btn active" onclick="setLang('en', this)">English</button>
-        <button class="lang-btn" onclick="setLang('ti', this)">ትግርኛ</button>
-        <button class="lang-btn" onclick="setLang('am', this)">አማርኛ</button>
-    </div>
-
-    <input type="text" id="menuSearch" class="search-box" placeholder="🔍 Search..." onkeyup="searchMenu()">
-
-    <div id="specialSection" class="special-banner">
-        <h2 id="special-title">⭐ Today’s Special</h2>
-        <p id="special-desc">Burger + Juice — 150 ETB</p>
-    </div>
-
-    <div class="category-group">
-        <div class="category-header" id="head-breakfast" style="background: #e67e22;">🍳 Breakfast</div>
-        <div class="menu-item"><div class="item-info"><span>🍳</span><span class="item-text" data-key="eggs">Eggs</span></div><span class="price" id="p-eggs">50 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🥞</span><span class="item-text" data-key="pancake">Pancake</span></div><span class="price" id="p-pancake">70 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🍞</span><span class="item-text" data-key="bread">Bread & Jam</span></div><span class="price" id="p-bread">40 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🥐</span><span class="item-text" data-key="croissant">Croissant</span></div><span class="price" id="p-croissant">60 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🥣</span><span class="item-text" data-key="porridge">Porridge</span></div><span class="price" id="p-porridge">45 ETB</span></div>
-    </div>
-
-    <div class="category-group">
-        <div class="category-header" id="head-fastfood" style="background: #e74c3c;">🍔 Fast Food</div>
-        <div class="menu-item"><div class="item-info"><span>🍔</span><span class="item-text" data-key="burger">Burger</span></div><span class="price" id="p-burger">120 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🍟</span><span class="item-text" data-key="fries">French Fries</span></div><span class="price" id="p-fries">80 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🌭</span><span class="item-text" data-key="hotdog">Hot Dog</span></div><span class="price" id="p-hotdog">90 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🍕</span><span class="item-text" data-key="pizza">Pizza</span></div><span class="price" id="p-pizza">150 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🍗</span><span class="item-text" data-key="chicken">Fried Chicken</span></div><span class="price" id="p-chicken">1500 ETB</span></div>
-    </div>
-
-    <div class="category-group">
-        <div class="category-header" id="head-soft" style="background: #3498db;">🥤 Soft Drinks</div>
-        <div class="menu-item"><div class="item-info"><span>🥤</span><span class="item-text" data-key="coke">Coca-Cola</span></div><span class="price" id="p-coke">30 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🥤</span><span class="item-text" data-key="pepsi">Pepsi</span></div><span class="price" id="p-pepsi">30 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🥤</span><span class="item-text" data-key="fanta">Fanta</span></div><span class="price" id="p-fanta">30 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🥤</span><span class="item-text" data-key="sprite">Sprite</span></div><span class="price" id="p-sprite">30 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>💧</span><span class="item-text" data-key="water">Mineral Water</span></div><span class="price" id="p-water">20 ETB</span></div>
-    </div>
-
-    <div class="category-group">
-        <div class="category-header" id="head-alcohol" style="background: #8e44ad;">🍺 Alcohols</div>
-        <div class="menu-item"><div class="item-info"><span>🍺</span><span class="item-text" data-key="beer">Beer</span></div><span class="price" id="p-beer">60 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🍷</span><span class="item-text" data-key="wine">Wine</span></div><span class="price" id="p-wine">120 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🥃</span><span class="item-text" data-key="whisky">Whisky</span></div><span class="price" id="p-whisky">150 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🍸</span><span class="item-text" data-key="cocktail">Cocktail</span></div><span class="price" id="p-cocktail">140 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🍾</span><span class="item-text" data-key="champagne">Champagne</span></div><span class="price" id="p-champagne">200 ETB</span></div>
-    </div>
-
-    <div class="category-group">
-        <div class="category-header" id="head-juice" style="background: #27ae60;">🧃 Juices</div>
-        <div class="menu-item"><div class="item-info"><span>🥭</span><span class="item-text" data-key="mango">Mango Juice</span></div><span class="price" id="p-mango">60 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🥑</span><span class="item-text" data-key="avocado">Avocado Juice</span></div><span class="price" id="p-avocado">80 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🍊</span><span class="item-text" data-key="orange">Orange Juice</span></div><span class="price" id="p-orange">50 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🥣</span><span class="item-text" data-key="papaya">Papaya Juice</span></div><span class="price" id="p-papaya">55 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🍹</span><span class="item-text" data-key="mixed">Mixed Juice</span></div><span class="price" id="p-mixed">70 ETB</span></div>
-    </div>
-
-    <div class="category-group">
-        <div class="category-header" id="head-hot" style="background: #7f8c8d;">☕ Hot Beverages</div>
-        <div class="menu-item"><div class="item-info"><span>☕</span><span class="item-text" data-key="coffee">Coffee</span></div><span class="price" id="p-coffee">30 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🍵</span><span class="item-text" data-key="tea">Tea</span></div><span class="price" id="p-tea">20 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🥛</span><span class="item-text" data-key="milk">Milk</span></div><span class="price" id="p-milk">25 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>☕</span><span class="item-text" data-key="macchiato">Macchiato</span></div><span class="price" id="p-macchiato">35 ETB</span></div>
-        <div class="menu-item"><div class="item-info"><span>🍫</span><span class="item-text" data-key="hotchoc">Hot Chocolate</span></div><span class="price" id="p-hotchoc">40 ETB</span></div>
-    </div>
-
-    <button id="waiter-button" class="waiter-btn" onclick="alert('Staff notified!')">📞 Call Waiter</button>
+<div class="container" id="menu-root">
+    <div class="loading-spinner">Fetching latest menu from database...</div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 
 <script>
+    // 1. Firebase Config
     const firebaseConfig = {
         apiKey: "AIzaSyAJNjWNONdO1H54HzjCG8nmEjFWkYeRZCE",
         authDomain: "mekelle-cafe-menu.firebaseapp.com",
@@ -116,75 +64,49 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    let currentLiveBannerPrice = "150";
-    let currentLang = "en";
-    let pricesState = {}; // Stores all live prices
-
-    const itemsToTrack = [
-        { key: 'burger_price', id: 'special-desc', isSpecial: true },
-        { key: 'price_eggs', id: 'p-eggs' }, { key: 'price_pancake', id: 'p-pancake' }, { key: 'price_bread', id: 'p-bread' }, { key: 'price_croissant', id: 'p-croissant' }, { key: 'price_porridge', id: 'p-porridge' },
-        { key: 'price_burger', id: 'p-burger' }, { key: 'price_fries', id: 'p-fries' }, { key: 'price_hotdog', id: 'p-hotdog' }, { key: 'price_pizza', id: 'p-pizza' }, { key: 'price_chicken', id: 'p-chicken' },
-        { key: 'price_coke', id: 'p-coke' }, { key: 'price_pepsi', id: 'p-pepsi' }, { key: 'price_fanta', id: 'p-fanta' }, { key: 'price_sprite', id: 'p-sprite' }, { key: 'price_water', id: 'p-water' },
-        { key: 'price_beer', id: 'p-beer' }, { key: 'price_wine', id: 'p-wine' }, { key: 'price_whisky', id: 'p-whisky' }, { key: 'price_cocktail', id: 'p-cocktail' }, { key: 'price_champagne', id: 'p-champagne' },
-        { key: 'price_mango', id: 'p-mango' }, { key: 'price_avocado', id: 'p-avocado' }, { key: 'price_orange', id: 'p-orange' }, { key: 'price_papaya', id: 'p-papaya' }, { key: 'price_mixed', id: 'p-mixed' },
-        { key: 'price_coffee', id: 'p-coffee' }, { key: 'price_tea', id: 'p-tea' }, { key: 'price_milk', id: 'p-milk' }, { key: 'price_macchiato', id: 'p-macchiato' }, { key: 'price_hotchoc', id: 'p-hotchoc' }
-    ];
-
-    const langData = {
-        en: { sub: "Premium Digital Experience", search: "🔍 Search...", specialT: "⭐ Today’s Special", specialPrefix: "Burger + Juice — ", currency: " ETB", waiter: "📞 Call Waiter", heads: ["🍳 Breakfast", "🍔 Fast Food", "🥤 Soft Drinks", "🍺 Alcohols", "🧃 Juices", "☕ Hot Beverages"], items: { eggs: "Eggs", pancake: "Pancake", bread: "Bread & Jam", croissant: "Croissant", porridge: "Porridge", burger: "Burger", fries: "French Fries", hotdog: "Hot Dog", pizza: "Pizza", chicken: "Fried Chicken", coke: "Coca-Cola", pepsi: "Pepsi", fanta: "Fanta", sprite: "Sprite", water: "Mineral Water", beer: "Beer", wine: "Wine", whisky: "Whisky", cocktail: "Cocktail", champagne: "Champagne", mango: "Mango Juice", avocado: "Avocado Juice", orange: "Orange Juice", papaya: "Papaya Juice", mixed: "Mixed Juice", coffee: "Coffee", tea: "Tea", milk: "Milk", macchiato: "Macchiato", hotchoc: "Hot Chocolate"} },
-        ti: { sub: "ብሉጽ ዲጂታል ኣገልግሎት", search: "🔍 ምግቢ ድለዩ...", specialT: "⭐ ናይ ሎሚ ፍሉይ", specialPrefix: "በርገር + ጁስ — ", currency: " ብር", waiter: "📞 ተቐባሊ ጸውዕ", heads: ["🍳 ቁርሲ", "🍔 ቅልጡፍ ምግቢ", "🥤 ልስሉስ መስተ", "🍺 ኣልኮል", "🧃 ጁስ", "☕ ውዑይ መስተ"], items: { eggs: "እንቁላሊሕ", pancake: "ፓንኬክ", bread: "ባኒ ምስ ጃም", croissant: "ክሮሳይንት", porridge: "ገዓት", burger: "በርገር", fries: "ቺፕስ", hotdog: "ሆት ዶግ", pizza: "ፒዛ", chicken: "ጥብሲ ደርሆ", coke: "ኮካ ኮላ", pepsi: "ፔፕሲ", fanta: "ፋንታ", sprite: "ስፕራይት", water: "ማይ", beer: "ቢራ", wine: "ወይን", whisky: "ዊስኪ", cocktail: "ኮክቴል", champagne: "ሻምፓኝ", mango: "ማንጎ ጁስ", avocado: "ኣቮካዶ ጁስ", orange: "ኣራንሺ ጁስ", papaya: "ፓፓያ ጁስ", mixed: "ዝተሓወሰ ጁስ", coffee: "ቡን", tea: "ሻሂ", milk: "ጸባ", macchiato: "ማኪያቶ", hotchoc: "ውዑይ ቸኮላታ"} },
-        am: { sub: "ምርጥ የዲጂታል አገልግሎት", search: "🔍 ምግብ ይፈልጉ...", specialT: "⭐ የዛሬ ልዩ", specialPrefix: "በርገር + ጁስ — ", currency: " ብር", waiter: "📞 አስተናጋጅ ጥራ", heads: ["🍳 ቁርስ", "🍔 ፈጣን ምግብ", "🥤 ለስላሳ መጠጦች", "🍺 አልኮል", "🧃 ጁስ", "☕ ትኩስ መጠጦች"], items: { eggs: "እንቁላል", pancake: "ፓንኬክ", bread: "ዳቦ በጃም", croissant: "ክሮሳንት", porridge: "ገንፎ", burger: "በርገር", fries: "ቺፕስ", hotdog: "ሆት ዶግ", pizza: "ፒዛ", chicken: "የተጠበሰ ዶሮ", coke: "ኮካ ኮላ", pepsi: "ፔፕሲ", fanta: "ፋንታ", sprite: "ስፕራይት", water: "የታሸገ ውሃ", beer: "ቢራ", wine: "ወይን", whisky: "ዊስኪ", cocktail: "ኮክቴል", champagne: "ሻምፓኝ", mango: "ማንጎ ጁስ", avocado: "አቮካዶ ጁስ", orange: "ብርቱካን ጁስ", papaya: "ፓፓያ ጁስ", mixed: "የተቀላቀለ ጁስ", coffee: "ቡና", tea: "ሻይ", milk: "ወተት", macchiato: "ማኪያቶ", hotchoc: "ትኩስ ቸኮሌት"} }
-    };
-
-    itemsToTrack.forEach(item => {
-        db.ref(item.key).on('value', (snapshot) => {
-            const val = snapshot.val();
-            if (val) {
-                pricesState[item.id] = val;
-                if (item.isSpecial) currentLiveBannerPrice = val;
-                updateDisplay();
-            }
-        });
-    });
-
-    function updateDisplay() {
-        const lang = langData[currentLang];
-        document.getElementById('special-desc').innerText = lang.specialPrefix + currentLiveBannerPrice + lang.currency;
-        itemsToTrack.forEach(item => {
-            if (!item.isSpecial && pricesState[item.id]) {
-                document.getElementById(item.id).innerText = pricesState[item.id] + lang.currency;
-            }
-        });
-    }
-
-    function setLang(lang, btn) {
-        currentLang = lang;
-        const data = langData[lang];
-        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        document.getElementById('sub-header').innerText = data.sub;
-        document.getElementById('menuSearch').placeholder = data.search;
-        document.getElementById('special-title').innerText = data.specialT;
-        document.getElementById('waiter-button').innerText = data.waiter;
+    // 2. Fetch and Build Menu
+    db.ref('menu_items').on('value', (snapshot) => {
+        const root = document.getElementById('menu-root');
+        root.innerHTML = ''; // Clear loading message
         
-        const headIds = ['head-breakfast', 'head-fastfood', 'head-soft', 'head-alcohol', 'head-juice', 'head-hot'];
-        headIds.forEach((id, index) => document.getElementById(id).innerText = data.heads[index]);
-
-        document.querySelectorAll('[data-key]').forEach(el => {
-            el.innerText = data.items[el.getAttribute('data-key')];
-        });
-
-        updateDisplay();
-    }
-
-    function searchMenu() {
-        let input = document.getElementById('menuSearch').value.toLowerCase();
-        let items = document.getElementsByClassName('menu-item');
-        for (let item of items) {
-            item.style.display = item.innerText.toLowerCase().includes(input) ? "flex" : "none";
+        const data = snapshot.val();
+        if (!data) {
+            root.innerHTML = '<p style="text-align:center">Menu is currently empty. Add items in Firebase!</p>';
+            return;
         }
-    }
+
+        // Group items by category automatically
+        const categories = {};
+        for (let id in data) {
+            const item = data[id];
+            const cat = item.category || "General";
+            if (!categories[cat]) categories[cat] = [];
+            categories[cat].push(item);
+        }
+
+        // Generate HTML for each category and item
+        for (let catName in categories) {
+            const section = document.createElement('div');
+            section.className = 'category-section';
+            
+            let itemsHtml = `<div class="category-title">${catName}</div>`;
+            
+            categories[catName].forEach(item => {
+                itemsHtml += `
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <span class="item-icon">${item.icon || '🍴'}</span>
+                            <span class="item-name">${item.name}</span>
+                        </div>
+                        <span class="price-tag">${item.price} ETB</span>
+                    </div>
+                `;
+            });
+            
+            section.innerHTML = itemsHtml;
+            root.appendChild(section);
+        }
+    });
 </script>
 </body>
 </html>
