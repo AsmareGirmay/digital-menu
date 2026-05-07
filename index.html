@@ -33,9 +33,9 @@
 
 <div class="container">
     <div class="lang-switcher">
-        <button id="btn-en" class="lang-btn active" onclick="setLang('en', this)">English</button>
-        <button id="btn-ti" class="lang-btn" onclick="setLang('ti', this)">ትግርኛ</button>
-        <button id="btn-am" class="lang-btn" onclick="setLang('am', this)">አማርኛ</button>
+        <button class="lang-btn active" onclick="setLang('en', this)">English</button>
+        <button class="lang-btn" onclick="setLang('ti', this)">ትግርኛ</button>
+        <button class="lang-btn" onclick="setLang('am', this)">አማርኛ</button>
     </div>
 
     <input type="text" id="menuSearch" class="search-box" placeholder="🔍 Search for food or drinks..." onkeyup="searchMenu()">
@@ -49,17 +49,54 @@
         <div class="category-header" id="head-breakfast" style="background: #e67e22;">🍳 Breakfast</div>
         <div class="menu-item"><div class="item-info"><span>🍳</span><span class="item-text" data-key="eggs">Eggs</span></div><span class="price">50 ETB</span></div>
         <div class="menu-item"><div class="item-info"><span>🥞</span><span class="item-text" data-key="pancake">Pancake</span></div><span class="price">70 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍞</span><span class="item-text" data-key="bread">Bread & Jam</span></div><span class="price">40 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥐</span><span class="item-text" data-key="croissant">Croissant</span></div><span class="price">60 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥣</span><span class="item-text" data-key="porridge">Porridge</span></div><span class="price">45 ETB</span></div>
     </div>
 
     <div class="category-group">
         <div class="category-header" id="head-fastfood" style="background: #e74c3c;">🍔 Fast Food</div>
         <div class="menu-item"><div class="item-info"><span>🍔</span><span class="item-text" data-key="burger">Burger</span></div><span class="price">120 ETB</span></div>
         <div class="menu-item"><div class="item-info"><span>🍟</span><span class="item-text" data-key="fries">French Fries</span></div><span class="price">80 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🌭</span><span class="item-text" data-key="hotdog">Hot Dog</span></div><span class="price">90 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍕</span><span class="item-text" data-key="pizza">Pizza</span></div><span class="price">150 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍗</span><span class="item-text" data-key="chicken">Fried Chicken</span></div><span class="price">1500 ETB</span></div>
     </div>
 
     <div class="category-group">
         <div class="category-header" id="head-soft" style="background: #3498db;">🥤 Soft Drinks</div>
         <div class="menu-item"><div class="item-info"><span>🥤</span><span class="item-text" data-key="coke">Coca-Cola</span></div><span class="price">30 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥤</span><span class="item-text" data-key="pepsi">Pepsi</span></div><span class="price">30 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥤</span><span class="item-text" data-key="fanta">Fanta</span></div><span class="price">30 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥤</span><span class="item-text" data-key="sprite">Sprite</span></div><span class="price">30 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>💧</span><span class="item-text" data-key="water">Mineral Water</span></div><span class="price">20 ETB</span></div>
+    </div>
+
+    <div class="category-group">
+        <div class="category-header" id="head-alcohol" style="background: #8e44ad;">🍺 Alcohols</div>
+        <div class="menu-item"><div class="item-info"><span>🍺</span><span class="item-text" data-key="beer">Beer</span></div><span class="price">60 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍷</span><span class="item-text" data-key="wine">Wine</span></div><span class="price">120 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥃</span><span class="item-text" data-key="whisky">Whisky</span></div><span class="price">150 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍸</span><span class="item-text" data-key="cocktail">Cocktail</span></div><span class="price">140 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍾</span><span class="item-text" data-key="champagne">Champagne</span></div><span class="price">200 ETB</span></div>
+    </div>
+
+    <div class="category-group">
+        <div class="category-header" id="head-juice" style="background: #27ae60;">🧃 Juices</div>
+        <div class="menu-item"><div class="item-info"><span>🥭</span><span class="item-text" data-key="mango">Mango Juice</span></div><span class="price">60 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥑</span><span class="item-text" data-key="avocado">Avocado Juice</span></div><span class="price">80 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍊</span><span class="item-text" data-key="orange">Orange Juice</span></div><span class="price">50 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥣</span><span class="item-text" data-key="papaya">Papaya Juice</span></div><span class="price">55 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍹</span><span class="item-text" data-key="mixed">Mixed Juice</span></div><span class="price">70 ETB</span></div>
+    </div>
+
+    <div class="category-group">
+        <div class="category-header" id="head-hot" style="background: #7f8c8d;">☕ Hot Beverages</div>
+        <div class="menu-item"><div class="item-info"><span>☕</span><span class="item-text" data-key="coffee">Coffee</span></div><span class="price">30 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍵</span><span class="item-text" data-key="tea">Tea</span></div><span class="price">20 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🥛</span><span class="item-text" data-key="milk">Milk</span></div><span class="price">25 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>☕</span><span class="item-text" data-key="macchiato">Macchiato</span></div><span class="price">35 ETB</span></div>
+        <div class="menu-item"><div class="item-info"><span>🍫</span><span class="item-text" data-key="hotchoc">Hot Chocolate</span></div><span class="price">40 ETB</span></div>
     </div>
 
     <button id="waiter-button" class="waiter-btn" onclick="alert('Staff notified!')">📞 Call Waiter</button>
@@ -69,7 +106,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 
 <script>
-    // 1. Firebase Configuration
+    // 1. Firebase Config
     const firebaseConfig = {
         apiKey: "AIzaSyAJNjWNONdO1H54HzjCG8nmEjFWkYeRZCE",
         authDomain: "mekelle-cafe-menu.firebaseapp.com",
@@ -84,37 +121,68 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // 2. Global Variables
+    // 2. State Management
     let currentLivePrice = "150"; 
     let currentLang = "en";
 
     const langData = {
-        en: { sub: "Premium Digital Experience", search: "🔍 Search...", specialT: "⭐ Today’s Special", specialD: "Burger + Juice — ", waiter: "📞 Call Waiter", bfast: "🍳 Breakfast", fastfood: "🍔 Fast Food", soft: "🥤 Soft Drinks", eggs: "Eggs", pancake: "Pancake", burger: "Burger", fries: "French Fries", coke: "Coca-Cola" },
-        ti: { sub: "ብሉጽ ዲጂታል ኣገልግሎት", search: "🔍 ምግቢ ድለዩ...", specialT: "⭐ ናይ ሎሚ ፍሉይ", specialD: "በርገር + ጁስ — ", waiter: "📞 ተቐባሊ ጸውዕ", bfast: "🍳 ቁርሲ", fastfood: "🍔 ቅልጡፍ ምግቢ", soft: "🥤 ልስሉስ መስተ", eggs: "እንቁላሊሕ", pancake: "ፓንኬክ", burger: "በርገር", fries: "ቺፕስ", coke: "ኮካ ኮላ" },
-        am: { sub: "ምርጥ የዲጂታል አገልግሎት", search: "🔍 ምግብ ይፈልጉ...", specialT: "⭐ የዛሬ ልዩ", specialD: "በርገር + ጁስ — ", waiter: "📞 አስተናጋጅ ጥራ", bfast: "🍳 ቁርስ", fastfood: "🍔 ፈጣን ምግብ", soft: "🥤 ለስላሳ መጠጦች", eggs: "እንቁላል", pancake: "ፓንኬክ", burger: "በርገር", fries: "ቺፕስ", coke: "ኮካ ኮላ" }
+        en: {
+            sub: "Premium Digital Experience", search: "🔍 Search for food or drinks...", 
+            specialT: "⭐ Today’s Special", specialD: "Burger + Juice — ",
+            waiter: "📞 Call Waiter", bfast: "🍳 Breakfast", fastfood: "🍔 Fast Food", soft: "🥤 Soft Drinks", alcohol: "🍺 Alcohols", juice: "🧃 Juices", hot: "☕ Hot Beverages",
+            eggs: "Eggs", pancake: "Pancake", bread: "Bread & Jam", croissant: "Croissant", porridge: "Porridge",
+            burger: "Burger", fries: "French Fries", hotdog: "Hot Dog", pizza: "Pizza", chicken: "Fried Chicken",
+            coke: "Coca-Cola", pepsi: "Pepsi", fanta: "Fanta", sprite: "Sprite", water: "Mineral Water",
+            beer: "Beer", wine: "Wine", whisky: "Whisky", cocktail: "Cocktail", champagne: "Champagne",
+            mango: "Mango Juice", avocado: "Avocado Juice", orange: "Orange Juice", papaya: "Papaya Juice", mixed: "Mixed Juice",
+            coffee: "Coffee", tea: "Tea", milk: "Milk", macchiato: "Macchiato", hotchoc: "Hot Chocolate"
+        },
+        ti: {
+            sub: "ብሉጽ ዲጂታል ኣገልግሎት", search: "🔍 ምግቢ ወይ መስተ ድለዩ...", 
+            specialT: "⭐ ናይ ሎሚ ፍሉይ", specialD: "በርገር + ጁስ — ",
+            waiter: "📞 ተቐባሊ ጸውዕ", bfast: "🍳 ቁርሲ", fastfood: "🍔 ቅልጡፍ ምግቢ", soft: "🥤 ልስሉስ መስተ", alcohol: "🍺 ኣልኮል", juice: "🧃 ጁስ", hot: "☕ ውዑይ መስተ",
+            eggs: "እንቁላሊሕ", pancake: "ፓንኬክ", bread: "ባኒ ምስ ጃም", croissant: "ክሮሳይንት", porridge: "ገዓት",
+            burger: "በርገር", fries: "ቺፕስ", hotdog: "ሆት ዶግ", pizza: "ፒዛ", chicken: "ጥብሲ ደርሆ",
+            coke: "ኮካ ኮላ", pepsi: "ፔፕሲ", fanta: "ፋንታ", sprite: "ስፕራይት", water: "ማይ",
+            beer: "ቢራ", wine: "ወይን", whisky: "ዊስኪ", cocktail: "ኮክቴል", champagne: "ሻምፓኝ",
+            mango: "ማንጎ ጁስ", avocado: "ኣቮካዶ ጁስ", orange: "ኣራንሺ ጁስ", papaya: "ፓፓያ ጁስ", mixed: "ዝተሓወሰ ጁስ",
+            coffee: "ቡን", tea: "ሻሂ", milk: "ጸባ", macchiato: "ማኪያቶ", hotchoc: "ውዑይ ቸኮላታ"
+        },
+        am: {
+            sub: "ምርጥ የዲጂታል አገልግሎት", search: "🔍 ምግብ ወይም መጠጥ ይፈልጉ...", 
+            specialT: "⭐ የዛሬ ልዩ", specialD: "በርገር + ጁስ — ",
+            waiter: "📞 አስተናጋጅ ጥራ", bfast: "🍳 ቁርስ", fastfood: "🍔 ፈጣን ምግብ", soft: "🥤 ለስላሳ መጠጦች", alcohol: "🍺 አልኮል", juice: "🧃 ጁስ", hot: "☕ ትኩስ መጠጦች",
+            eggs: "እንቁላል", pancake: "ፓንኬክ", bread: "ዳቦ በጃም", croissant: "ክሮሳንት", porridge: "ገንፎ",
+            burger: "በርገር", fries: "ቺፕስ", hotdog: "ሆት ዶግ", pizza: "ፒዛ", chicken: "የተጠበሰ ዶሮ",
+            coke: "ኮካ ኮላ", pepsi: "ፔፕሲ", fanta: "ፋንታ", sprite: "ስፕራይት", water: "የታሸገ ውሃ",
+            beer: "ቢራ", wine: "ወይን", whisky: "ዊስኪ", cocktail: "ኮክቴል", champagne: "ሻምፓኝ",
+            mango: "ማንጎ ጁስ", avocado: "አቮካዶ ጁስ", orange: "ብርቱካን ጁስ", papaya: "ፓፓያ ጁስ", mixed: "የተቀላቀለ ጁስ",
+            coffee: "ቡና", tea: "ሻይ", milk: "ወተት", macchiato: "ማኪያቶ", hotchoc: "ትኩስ ቸኮሌት"
+        }
     };
 
-    // 3. Realtime Listener
+    // 3. Firebase Listener
     db.ref('burger_price').on('value', (snapshot) => {
         const price = snapshot.val();
         if (price) {
-            currentLivePrice = price; // Update price from Firebase
-            updateSpecialText(); 
+            currentLivePrice = price; 
+            updateBanner(); 
         }
     });
 
-    function updateSpecialText() {
-        // Combines the language-specific prefix with the live price
+    // Helper to update banner text
+    function updateBanner() {
+        const currency = (currentLang === 'en') ? " ETB" : " ብር";
         const prefix = langData[currentLang].specialD;
-        document.getElementById('special-desc').innerText = `${prefix}${currentLivePrice} ETB`;
+        document.getElementById('special-desc').innerText = `${prefix}${currentLivePrice}${currency}`;
     }
 
+    // 4. Language Switching Logic
     function setLang(lang, btn) {
         currentLang = lang;
         document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        // Update basic text
         document.getElementById('sub-header').innerText = langData[lang].sub;
         document.getElementById('menuSearch').placeholder = langData[lang].search;
         document.getElementById('special-title').innerText = langData[lang].specialT;
@@ -122,15 +190,18 @@
         document.getElementById('head-breakfast').innerText = langData[lang].bfast;
         document.getElementById('head-fastfood').innerText = langData[lang].fastfood;
         document.getElementById('head-soft').innerText = langData[lang].soft;
+        document.getElementById('head-alcohol').innerText = langData[lang].alcohol;
+        document.getElementById('head-juice').innerText = langData[lang].juice;
+        document.getElementById('head-hot').innerText = langData[lang].hot;
 
-        // Update the Live Special Banner
-        updateSpecialText();
+        updateBanner(); // Ensure live price reflects new language labels
 
         document.querySelectorAll('[data-key]').forEach(item => {
             item.innerText = langData[lang][item.getAttribute('data-key')];
         });
     }
 
+    // 5. Search Logic
     function searchMenu() {
         let input = document.getElementById('menuSearch').value.toLowerCase();
         let groups = document.getElementsByClassName('category-group');
