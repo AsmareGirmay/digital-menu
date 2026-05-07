@@ -108,8 +108,35 @@
     <button id="waiter-button" class="waiter-btn" onclick="alert('Staff notified!')">📞 Call Waiter</button>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+
 <script>
-    const langData = {
+    // 2. Your Firebase Configuration (The "ID Card")
+    const firebaseConfig = {
+        apiKey: "AIzaSyAJNjWNONdO1H54HzjCG8nmEjFWkYeRZCE",
+        authDomain: "mekelle-cafe-menu.firebaseapp.com",
+        databaseURL: "https://mekelle-cafe-menu-default-rtdb.firebaseio.com",
+        projectId: "mekelle-cafe-menu",
+        storageBucket: "mekelle-cafe-menu.firebasestorage.app",
+        messagingSenderId: "494158082943",
+        appId: "1:494158082943:web:bc322aad261a11a247e04a",
+        measurementId: "G-5LSSVHCREY"
+    };
+
+    // 3. Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // 4. Live Update Logic
+    // This will look for "burger_price" in your Firebase and update the Today's Special automatically
+    db.ref('burger_price').on('value', (snapshot) => {
+        const price = snapshot.val();
+        if (price) {
+            document.getElementById('special-desc').innerText = `Burger + Juice — ${price} ETB`;
+        }
+    });   
+ const langData = {
         en: {
             sub: "Premium Digital Experience", search: "🔍 Search for food or drinks...", 
             specialT: "⭐ Today’s Special", specialD: "Burger + Juice — 150 ETB",
