@@ -3,37 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mekelle Digital Cafe - Dynamic Menu</title>
+    <title>Mekelle Digital Cafe - Live Menu</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #f4f7f6; color: #333; }
-        header { background: #1c1e21; color: white; padding: 40px 20px; text-align: center; border-radius: 0 0 25px 25px; }
-        .container { width: 92%; max-width: 500px; margin: 20px auto; }
+        :root { --primary: #1c1e21; --accent: #e74c3c; --success: #27ae60; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background-color: var(--bg); color: var(--primary); padding-bottom: 80px; }
         
-        /* Category Styling */
+        header { background: var(--primary); color: white; padding: 40px 20px; text-align: center; border-radius: 0 0 25px 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .container { width: 92%; max-width: 500px; margin: -20px auto 20px; }
+
+        /* Search Bar */
+        .search-container { position: sticky; top: 10px; z-index: 100; margin-bottom: 25px; }
+        .search-box { 
+            width: 100%; padding: 15px 20px; border: none; border-radius: 30px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1); font-size: 1rem; outline: none; box-sizing: border-box;
+        }
+
+        /* Categories */
         .category-section { margin-bottom: 30px; }
         .category-title { 
-            background: #e74c3c; color: white; padding: 10px 20px; 
+            background: var(--accent); color: white; padding: 10px 25px; 
             border-radius: 50px; font-weight: bold; margin-bottom: 15px;
-            display: inline-block; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: inline-block; box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
         }
 
-        /* Menu Item Styling */
+        /* Menu Items */
         .menu-item { 
-            background: white; padding: 15px; margin-bottom: 10px; 
-            border-radius: 15px; display: flex; justify-content: space-between; 
-            align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
+            background: white; padding: 16px; margin-bottom: 12px; 
+            border-radius: 18px; display: flex; justify-content: space-between; 
+            align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            transition: 0.2s;
         }
-        .menu-item:active { transform: scale(0.98); }
-        .item-details { display: flex; align-items: center; gap: 12px; }
-        .item-icon { font-size: 1.5rem; }
-        .item-name { font-weight: 600; font-size: 1.1rem; }
+        .item-details { display: flex; align-items: center; gap: 15px; }
+        .item-icon { font-size: 1.6rem; }
+        .item-name { font-weight: 600; font-size: 1.05rem; }
         .price-tag { 
-            color: #27ae60; font-weight: 800; background: #e8f5e9; 
-            padding: 6px 15px; border-radius: 20px; font-size: 0.95rem; 
+            color: var(--success); font-weight: 800; background: #e8f5e9; 
+            padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; 
         }
 
-        .loading-spinner { text-align: center; margin-top: 50px; color: #888; font-style: italic; }
+        /* Call Waiter Button */
+        .waiter-fab {
+            position: fixed; bottom: 20px; right: 20px; left: 20px;
+            background: var(--primary); color: white; border: none;
+            padding: 18px; border-radius: 15px; font-size: 1.1rem;
+            font-weight: bold; cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            z-index: 1000;
+        }
+        .waiter-fab:active { transform: scale(0.95); }
+
+        .no-results { text-align: center; color: #888; margin-top: 40px; display: none; }
     </style>
 </head>
 <body>
@@ -43,15 +62,27 @@
     <p>Real-Time Menu Management</p>
 </header>
 
-<div class="container" id="menu-root">
-    <div class="loading-spinner">Fetching latest menu from database...</div>
+<div class="container">
+    <div class="search-container">
+        <input type="text" id="menuSearch" class="search-box" placeholder="🔍 Search for food or drinks..." onkeyup="searchMenu()">
+    </div>
+
+    <div id="menu-root">
+        <p style="text-align:center; color: #888;">Connecting to Mekelle Cafe Database...</p>
+    </div>
+    
+    <div id="noResults" class="no-results">No items found matching your search.</div>
 </div>
+
+<button class="waiter-fab" onclick="callWaiter()">
+    <span>📞</span> Call Waiter / ተቐባሊ ጸውዕ
+</button>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 
 <script>
-    // 1. Firebase Config
+    // 1. Firebase Configuration
     const firebaseConfig = {
         apiKey: "AIzaSyAJNjWNONdO1H54HzjCG8nmEjFWkYeRZCE",
         authDomain: "mekelle-cafe-menu.firebaseapp.com",
@@ -64,18 +95,19 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // 2. Fetch and Build Menu
+    // 2. Dynamic Menu Loader
     db.ref('menu_items').on('value', (snapshot) => {
         const root = document.getElementById('menu-root');
-        root.innerHTML = ''; // Clear loading message
-        
         const data = snapshot.val();
+        
         if (!data) {
-            root.innerHTML = '<p style="text-align:center">Menu is currently empty. Add items in Firebase!</p>';
+            root.innerHTML = '<p style="text-align:center">The menu is currently being updated. Please wait!</p>';
             return;
         }
 
-        // Group items by category automatically
+        root.innerHTML = ''; // Clear previous content
+
+        // Grouping logic
         const categories = {};
         for (let id in data) {
             const item = data[id];
@@ -84,15 +116,14 @@
             categories[cat].push(item);
         }
 
-        // Generate HTML for each category and item
+        // Generate HTML
         for (let catName in categories) {
             const section = document.createElement('div');
             section.className = 'category-section';
             
-            let itemsHtml = `<div class="category-title">${catName}</div>`;
-            
+            let html = `<div class="category-title">${catName}</div>`;
             categories[catName].forEach(item => {
-                itemsHtml += `
+                html += `
                     <div class="menu-item">
                         <div class="item-details">
                             <span class="item-icon">${item.icon || '🍴'}</span>
@@ -102,11 +133,55 @@
                     </div>
                 `;
             });
-            
-            section.innerHTML = itemsHtml;
+            section.innerHTML = html;
             root.appendChild(section);
         }
+        
+        // Reset search visibility after database update
+        searchMenu();
     });
+
+    // 3. Search Functionality
+    function searchMenu() {
+        const input = document.getElementById('menuSearch').value.toLowerCase();
+        const items = document.getElementsByClassName('menu-item');
+        const categories = document.getElementsByClassName('category-section');
+        const noResults = document.getElementById('noResults');
+        let totalVisible = 0;
+
+        for (let item of items) {
+            const text = item.innerText.toLowerCase();
+            if (text.includes(input)) {
+                item.style.display = "flex";
+                totalVisible++;
+            } else {
+                item.style.display = "none";
+            }
+        }
+
+        // Hide empty categories
+        for (let cat of categories) {
+            const visibleInCat = cat.querySelectorAll('.menu-item[style="display: flex;"]').length;
+            cat.style.display = visibleInCat > 0 ? "block" : "none";
+        }
+
+        noResults.style.display = (totalVisible === 0 && input !== "") ? "block" : "none";
+    }
+
+    // 4. Call Waiter Function
+    function callWaiter() {
+        // For your presentation, this shows UI feedback. 
+        // In a real system, this would write to a 'notifications' node in Firebase.
+        alert("🔔 Staff Notified! A waiter will be at your table shortly.");
+        
+        // Optional: Send to Firebase for a real dashboard
+        const timestamp = new Date().getTime();
+        db.ref('waiter_calls').push({
+            table: "Table 5", // You could get this from a URL parameter
+            time: timestamp,
+            status: "pending"
+        });
+    }
 </script>
 </body>
 </html>
