@@ -3,86 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mekelle Digital Cafe - Live Menu</title>
+    <title>Mekelle Digital Cafe - Multilingual</title>
     <style>
         :root { --primary: #1c1e21; --accent: #e74c3c; --success: #27ae60; --bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background-color: var(--bg); color: var(--primary); padding-bottom: 80px; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background-color: var(--bg); color: var(--primary); padding-bottom: 90px; }
         
-        header { background: var(--primary); color: white; padding: 40px 20px; text-align: center; border-radius: 0 0 25px 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        header { background: var(--primary); color: white; padding: 30px 20px; text-align: center; border-radius: 0 0 25px 25px; }
         .container { width: 92%; max-width: 500px; margin: -20px auto 20px; }
 
-        /* Search Bar */
-        .search-container { position: sticky; top: 10px; z-index: 100; margin-bottom: 25px; }
+        /* Language Switcher */
+        .lang-switcher { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
+        .lang-btn { 
+            background: white; border: 1px solid #ddd; padding: 8px 12px; 
+            border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: bold; transition: 0.3s;
+        }
+        .lang-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
         .search-box { 
             width: 100%; padding: 15px 20px; border: none; border-radius: 30px; 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1); font-size: 1rem; outline: none; box-sizing: border-box;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1); font-size: 1rem; outline: none; box-sizing: border-box; margin-bottom: 25px;
         }
 
-        /* Categories */
         .category-section { margin-bottom: 30px; }
         .category-title { 
-            background: var(--accent); color: white; padding: 10px 25px; 
+            background: var(--accent); color: white; padding: 8px 22px; 
             border-radius: 50px; font-weight: bold; margin-bottom: 15px;
             display: inline-block; box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
         }
 
-        /* Menu Items */
         .menu-item { 
             background: white; padding: 16px; margin-bottom: 12px; 
             border-radius: 18px; display: flex; justify-content: space-between; 
             align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-            transition: 0.2s;
         }
         .item-details { display: flex; align-items: center; gap: 15px; }
-        .item-icon { font-size: 1.6rem; }
-        .item-name { font-weight: 600; font-size: 1.05rem; }
-        .price-tag { 
-            color: var(--success); font-weight: 800; background: #e8f5e9; 
-            padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; 
-        }
+        .item-icon { font-size: 1.5rem; }
+        .item-name { font-weight: 600; }
+        .price-tag { color: var(--success); font-weight: 800; background: #e8f5e9; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; }
 
-        /* Call Waiter Button */
         .waiter-fab {
             position: fixed; bottom: 20px; right: 20px; left: 20px;
             background: var(--primary); color: white; border: none;
-            padding: 18px; border-radius: 15px; font-size: 1.1rem;
+            padding: 18px; border-radius: 15px; font-size: 1.05rem;
             font-weight: bold; cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            display: flex; justify-content: center; align-items: center; gap: 10px;
             z-index: 1000;
         }
-        .waiter-fab:active { transform: scale(0.95); }
-
-        .no-results { text-align: center; color: #888; margin-top: 40px; display: none; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>🍽️ Mekelle Digital Cafe</h1>
-    <p>Real-Time Menu Management</p>
+    <h1 id="ui-title">🍽️ Mekelle Digital Cafe</h1>
+    <p id="ui-subtitle">Real-Time Menu Management</p>
 </header>
 
 <div class="container">
-    <div class="search-container">
-        <input type="text" id="menuSearch" class="search-box" placeholder="🔍 Search for food or drinks..." onkeyup="searchMenu()">
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLang('en', this)">English</button>
+        <button class="lang-btn" onclick="setLang('ti', this)">ትግርኛ</button>
+        <button class="lang-btn" onclick="setLang('am', this)">አማርኛ</button>
     </div>
+
+    <input type="text" id="menuSearch" class="search-box" placeholder="🔍 Search..." onkeyup="searchMenu()">
 
     <div id="menu-root">
-        <p style="text-align:center; color: #888;">Connecting to Mekelle Cafe Database...</p>
+        <p style="text-align:center; color: #888;">Loading / ይጽዕን ኣሎ...</p>
     </div>
-    
-    <div id="noResults" class="no-results">No items found matching your search.</div>
 </div>
 
-<button class="waiter-fab" onclick="callWaiter()">
-    <span>📞</span> Call Waiter / ተቐባሊ ጸውዕ
+<button id="ui-waiter" class="waiter-fab" onclick="callWaiter()">
+    📞 Call Waiter / ተቐባሊ ጸውዕ
 </button>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 
 <script>
-    // 1. Firebase Configuration
     const firebaseConfig = {
         apiKey: "AIzaSyAJNjWNONdO1H54HzjCG8nmEjFWkYeRZCE",
         authDomain: "mekelle-cafe-menu.firebaseapp.com",
@@ -95,33 +91,76 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // 2. Dynamic Menu Loader
-    db.ref('menu_items').on('value', (snapshot) => {
-        const root = document.getElementById('menu-root');
-        const data = snapshot.val();
-        
-        if (!data) {
-            root.innerHTML = '<p style="text-align:center">The menu is currently being updated. Please wait!</p>';
-            return;
+    let currentLang = 'en';
+    let menuData = null;
+
+    const langData = {
+        en: {
+            subtitle: "Real-Time Menu Management",
+            search: "🔍 Search for food or drinks...",
+            waiter: "📞 Call Waiter",
+            waiterAlert: "Staff notified! A waiter is coming.",
+            currency: " ETB",
+            categories: { "Breakfast": "🍳 Breakfast", "Fast Food": "🍔 Fast Food", "Soft Drinks": "🥤 Soft Drinks", "Alcohols": "🍺 Alcohols", "Juices": "🧃 Juices", "Hot Beverages": "☕ Hot Beverages" }
+        },
+        ti: {
+            subtitle: "ብሉጽ ዲጂታል ኣገልግሎት",
+            search: "🔍 ምግቢ ድለዩ...",
+            waiter: "📞 ተቐባሊ ጸውዕ",
+            waiterAlert: "ተቐባሊ ተጸዊዑ ኣሎ! ሕጂ ክመጽእ እዩ።",
+            currency: " ብር",
+            categories: { "Breakfast": "🍳 ቁርሲ", "Fast Food": "🍔 ቅልጡፍ ምግቢ", "Soft Drinks": "🥤 ልስሉስ መስተ", "Alcohols": "🍺 ኣልኮል", "Juices": "🧃 ጁስ", "Hot Beverages": "☕ ውዑይ መስተ" }
+        },
+        am: {
+            subtitle: "ምርጥ የዲጂታል አገልግሎት",
+            search: "🔍 ምግብ ይፈልጉ...",
+            waiter: "📞 አስተናጋጅ ጥራ",
+            waiterAlert: "አስተናጋጅ ተጠርቷል! አሁን ይመጣል።",
+            currency: " ብር",
+            categories: { "Breakfast": "🍳 ቁርስ", "Fast Food": "🍔 ፈጣን ምግብ", "Soft Drinks": "🥤 ለስላሳ መጠጦች", "Alcohols": "🍺 አልኮል", "Juices": "🧃 ጁስ", "Hot Beverages": "☕ ትኩስ መጠጦች" }
         }
+    };
 
-        root.innerHTML = ''; // Clear previous content
+    function setLang(lang, btn) {
+        currentLang = lang;
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Update Static UI
+        const d = langData[lang];
+        document.getElementById('ui-subtitle').innerText = d.subtitle;
+        document.getElementById('menuSearch').placeholder = d.search;
+        document.getElementById('ui-waiter').innerText = d.waiter;
+        
+        renderMenu(); // Re-render to translate categories and currency
+    }
 
-        // Grouping logic
+    db.ref('menu_items').on('value', (snapshot) => {
+        menuData = snapshot.val();
+        renderMenu();
+    });
+
+    function renderMenu() {
+        const root = document.getElementById('menu-root');
+        if (!menuData) return;
+        root.innerHTML = '';
+
         const categories = {};
-        for (let id in data) {
-            const item = data[id];
+        for (let id in menuData) {
+            const item = menuData[id];
             const cat = item.category || "General";
             if (!categories[cat]) categories[cat] = [];
             categories[cat].push(item);
         }
 
-        // Generate HTML
         for (let catName in categories) {
             const section = document.createElement('div');
             section.className = 'category-section';
             
-            let html = `<div class="category-title">${catName}</div>`;
+            // Translate Category Header
+            const translatedCat = langData[currentLang].categories[catName] || catName;
+            
+            let html = `<div class="category-title">${translatedCat}</div>`;
             categories[catName].forEach(item => {
                 html += `
                     <div class="menu-item">
@@ -129,58 +168,31 @@
                             <span class="item-icon">${item.icon || '🍴'}</span>
                             <span class="item-name">${item.name}</span>
                         </div>
-                        <span class="price-tag">${item.price} ETB</span>
-                    </div>
-                `;
+                        <span class="price-tag">${item.price}${langData[currentLang].currency}</span>
+                    </div>`;
             });
             section.innerHTML = html;
             root.appendChild(section);
         }
-        
-        // Reset search visibility after database update
-        searchMenu();
-    });
+        searchMenu(); 
+    }
 
-    // 3. Search Functionality
     function searchMenu() {
         const input = document.getElementById('menuSearch').value.toLowerCase();
         const items = document.getElementsByClassName('menu-item');
-        const categories = document.getElementsByClassName('category-section');
-        const noResults = document.getElementById('noResults');
-        let totalVisible = 0;
-
+        const sections = document.getElementsByClassName('category-section');
         for (let item of items) {
-            const text = item.innerText.toLowerCase();
-            if (text.includes(input)) {
-                item.style.display = "flex";
-                totalVisible++;
-            } else {
-                item.style.display = "none";
-            }
+            item.style.display = item.innerText.toLowerCase().includes(input) ? "flex" : "none";
         }
-
-        // Hide empty categories
-        for (let cat of categories) {
-            const visibleInCat = cat.querySelectorAll('.menu-item[style="display: flex;"]').length;
-            cat.style.display = visibleInCat > 0 ? "block" : "none";
+        for (let sec of sections) {
+            const visible = sec.querySelectorAll('.menu-item[style="display: flex;"]').length;
+            sec.style.display = visible > 0 ? "block" : "none";
         }
-
-        noResults.style.display = (totalVisible === 0 && input !== "") ? "block" : "none";
     }
 
-    // 4. Call Waiter Function
     function callWaiter() {
-        // For your presentation, this shows UI feedback. 
-        // In a real system, this would write to a 'notifications' node in Firebase.
-        alert("🔔 Staff Notified! A waiter will be at your table shortly.");
-        
-        // Optional: Send to Firebase for a real dashboard
-        const timestamp = new Date().getTime();
-        db.ref('waiter_calls').push({
-            table: "Table 5", // You could get this from a URL parameter
-            time: timestamp,
-            status: "pending"
-        });
+        alert(langData[currentLang].waiterAlert);
+        db.ref('waiter_calls').push({ time: new Date().getTime(), lang: currentLang });
     }
 </script>
 </body>
